@@ -10,7 +10,9 @@ export class EndPoint {
     constructor(model:string) {        
         this.openaiService = new OpenAIService(model);        
     }
-
+    decideEndpointType():string{
+      return "POST"
+    }
     async selectEndpoint(requestContent:string): Promise<any> {        
         try {            
             const result = await this.openaiService.create(requestContent);
