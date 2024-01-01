@@ -18,7 +18,7 @@ Before using `llm-api-endpoints-agents`, you need to set up a few things:
    API_ENDPOINTS_CONFIG_PATH=path_to_your_api_endpoints_config_file
    ```
 
-2. **API Endpoints Configuration**: You need to have an `api-endpoints.json` file in your project root. Here's a template:
+2. **API Endpoints Configuration**: You need to have an `api-endpoints.json` file in your project root that list all the endpoints of your api and their descriptions. Here's a template:
    ```json
    {
      "endpoints": [
