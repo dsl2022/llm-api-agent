@@ -1,7 +1,7 @@
 # llm-api-endpoints-agents
 
 ## Overview
-`llm-api-endpoints-agents` is a Node.js package designed for interacting with AI API endpoints. It simplifies sending requests and processing responses from AI models, particularly those related to language learning models (LLM).
+`llm-api-endpoints-agents` is a Node.js package designed for using gpt to automatically select the right api endpoint based on human language prompt. It simplifies sending requests and processing responses from human language request, targeting users who want to build applications that will send https request based on human language. Note: currently only works with English. 
 
 ## Installation
 To install the package, run the following command in your Node.js project:
