@@ -18,11 +18,13 @@
   "release": { 
     "branches": [ "main" ] 
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+  "scripts": {    
     "build": "rm -rf dist && microbundle --tsconfig tsconfig.json --no-sourcemap",
     "start": "ts-node src/index.ts",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "coverage": "jest --coverage"
   },
   "keywords": [
     "llm",

@@ -18,7 +18,7 @@ export class EndPoint {
             const result = await this.openaiService.create(requestContent);
             return result;
         } catch (error) {
-            console.error("An error occurred: ", error);
+            // console.error("An error occurred: ", error);
             throw error;
         }
     }

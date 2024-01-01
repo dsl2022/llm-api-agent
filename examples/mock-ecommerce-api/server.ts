@@ -15,7 +15,9 @@ app.get('/get-products', (req: Request, res: Response) => {
 
 // GET: GetProductDetails
 app.get('/get-product-details', (req: Request, res: Response) => {
-  res.json({ message: 'Product details' });
+    const id  = req?.query?.id
+    data.getProductDetailById("2")
+    res.json({ message: 'Product details' });
 });
 
 // POST: UserRegistration

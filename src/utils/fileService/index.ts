@@ -3,6 +3,7 @@ const path = require('path');
 
 export class FileService {
     public rootDir: string;
+    static mockImplementation: any;
     constructor(rootDir) {
         this.rootDir = rootDir;
     }
