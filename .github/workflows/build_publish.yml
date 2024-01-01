@@ -17,8 +17,8 @@ jobs:
         registry-url: 'https://registry.npmjs.org'
     - name: Install Dependencies
       run: npm install
-    # - name: Run Tests
-    #   run: npm test
+    - name: Run Tests
+      run: npm test
     - name: Semantic Release
       run: npx semantic-release
       env:
