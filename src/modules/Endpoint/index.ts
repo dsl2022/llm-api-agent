@@ -7,9 +7,8 @@ export class EndPoint {
     private openaiService: OpenAIService;
     
 
-    constructor(requestText: string) {
-        this.requestContent = requestText;        
-        this.openaiService = new OpenAIService('gpt-4');        
+    constructor(model:string) {        
+        this.openaiService = new OpenAIService(model);        
     }
 
     async selectEndpoint(requestContent:string): Promise<any> {        
