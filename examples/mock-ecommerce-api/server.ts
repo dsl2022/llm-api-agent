@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-
+import * as data from './data'
 const app = express();
 const port = 4000;
 
@@ -9,7 +9,8 @@ app.use(express.json());
 
 // GET: GetProducts
 app.get('/get-products', (req: Request, res: Response) => {
-  res.json({ message: 'List of products' });
+    res.status(200)
+    res.json(data.getProducts());
 });
 
 // GET: GetProductDetails
@@ -41,6 +42,10 @@ app.delete('/remove-from-cart', (req: Request, res: Response) => {
 app.put('/update-cart', (req: Request, res: Response) => {
   res.json({ message: 'Cart updated' });
 });
+
+app.patch('/update-cart', (req: Request, res: Response) => {
+    res.json({ message: 'Cart updated' });
+  });
 
 // POST: Checkout
 app.post('/checkout', (req: Request, res: Response) => {
