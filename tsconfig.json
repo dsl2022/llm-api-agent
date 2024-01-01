@@ -9,7 +9,12 @@
       "sourceMap": false,
       "outDir": "./dist",
       "baseUrl": "./",
-      "incremental": true
+      "incremental": true,
+      "paths": {
+        "@/*": ["/src/*"],
+        "@utils/*": ["src/utils/*"],
+        "@prompts/*": ["src/prompts/*"]     
+      }
     },
     "include": ["src/**/*"],
     "exclude": ["node_modules", "test", "lib", "**/*spec.ts"]
