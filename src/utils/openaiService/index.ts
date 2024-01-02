@@ -16,8 +16,8 @@ export class OpenAIService{
         this.fileService = new FileService(".");
     }
 
-   async create(message:string):Promise<any>{
-    const fileRead = await this.fileService.readFile(process.env.API_ENDPOINTS_CONFIG_PATH);            
+   async create(message:string,filePath:string):Promise<any>{
+    const fileRead = await this.fileService.readFile(filePath);            
     const response = await openai.chat.completions.create({
         model: this.model || "gpt-4-1106-preview",
         messages: [

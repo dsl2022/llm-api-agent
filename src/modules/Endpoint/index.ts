@@ -2,8 +2,7 @@ import { OpenAIService } from "@utils/openaiService/";
 
 
 export class EndPoint {
-    public requestContent: string;
-    
+    public requestContent: string;    
     private openaiService: OpenAIService;
     
 
@@ -13,9 +12,9 @@ export class EndPoint {
     decideEndpointType():string{
       return "POST"
     }
-    async selectEndpoint(requestContent:string): Promise<any> {        
+    async selectEndpoint(requestContent:string,apiEndpointFilePath:string): Promise<any> {        
         try {            
-            const result = await this.openaiService.create(requestContent);
+            const result = await this.openaiService.create(requestContent,apiEndpointFilePath);
             return result;
         } catch (error) {
             // console.error("An error occurred: ", error);
