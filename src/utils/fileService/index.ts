@@ -11,7 +11,7 @@ export class FileService {
     readFile(relativePath):Promise<any> {
         return new Promise((resolve, reject) => {
             const fullPath = path.join(this.rootDir, relativePath);
-
+            console.log("test full path",{fullPath})
             fs.readFile(fullPath, 'utf8', (err, data) => {
                 if (err) {
                     reject(err);
