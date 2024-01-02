@@ -31,12 +31,13 @@ describe('EndPoint', () => {
   describe('selectEndpoint', () => {
     it('should call openaiService.create and return result on success', async () => {
       const requestContent = 'test content';
+      const apiEndpointFilePath = 'mock/api-endpoint-file-path.json'; // Mock file path
       const expectedResult = 'mock result';
       endPoint.openaiService.create.mockResolvedValue(expectedResult);
 
-      const result = await endPoint.selectEndpoint(requestContent);
+      const result = await endPoint.selectEndpoint(requestContent, apiEndpointFilePath);
 
-      expect(endPoint.openaiService.create).toHaveBeenCalledWith(requestContent);
+      expect(endPoint.openaiService.create).toHaveBeenCalledWith(requestContent, apiEndpointFilePath);
       expect(result).toBe(expectedResult);
     });
 
