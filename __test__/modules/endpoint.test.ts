@@ -1,4 +1,4 @@
-import { EndPoint } from '../../src/modules/Endpoint'; // Adjust the import path as necessary
+import { EndPoint } from '../../src/modules/Endpoint'; 
 
 jest.mock('../../src/utils/openaiService', () => {
     return {
