@@ -6,8 +6,8 @@ export class EndPoint {
     private openaiService: OpenAIService;
     
 
-    constructor(model:string) {        
-        this.openaiService = new OpenAIService(model);        
+    constructor(model:string,apiKey:string) {        
+        this.openaiService = new OpenAIService(model,apiKey);        
     }
     decideEndpointType():string{
       return "POST"

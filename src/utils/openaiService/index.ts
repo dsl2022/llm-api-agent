@@ -3,22 +3,24 @@ import dotenv from 'dotenv';
 import { FileService } from "@utils/fileService";
 import {systemPrompt} from "@prompts/systemPrompts"
 dotenv.config();
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-  });
+
 
 export class OpenAIService{
     public model:string;
+    public openai:OpenAI;
     public fileDir: string;
     private fileService: FileService;
-    constructor(model:string){
+    constructor(model:string,apiKey:string){
         this.model = model;        
         this.fileService = new FileService(".");
+        this.openai = new OpenAI({
+          apiKey: apiKey,
+        });
     }
 
    async create(message:string,filePath:string):Promise<any>{
     const fileRead = await this.fileService.readFile(filePath);            
-    const response = await openai.chat.completions.create({
+    const response = await this.openai.chat.completions.create({
         model: this.model || "gpt-4-1106-preview",
         messages: [
             {

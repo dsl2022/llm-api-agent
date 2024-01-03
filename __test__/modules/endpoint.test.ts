@@ -11,9 +11,9 @@ jest.mock('../../src/utils/openaiService', () => {
 describe('EndPoint', () => {
   let endPoint;
   const mockModel = 'test-model';
-
+  const apiMockKey = "test key"
   beforeEach(() => {
-    endPoint = new EndPoint(mockModel);
+    endPoint = new EndPoint(mockModel,apiMockKey);
   });
 
   describe('constructor', () => {
