@@ -23,8 +23,12 @@
     "start": "ts-node src/index.ts",
     "prepublishOnly": "npm run build",
     "test": "jest",
+    "lint": "eslint 'src/**/*.{js,ts}' --fix",
+    "format": "prettier --write src/**/*.ts",
     "test:watch": "jest --watch",
-    "coverage": "jest --coverage"
+    "coverage": "jest --coverage",
+    "generate-docs": "typedoc jsdoc.json \"src/*.ts\"",
+    "view-docs": "serve ./docs"
   },
   "keywords": [
     "llm",

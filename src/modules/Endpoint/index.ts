@@ -1,24 +1,63 @@
-import { OpenAIService } from "@utils/openaiService/";
+import { OpenAIService } from '@utils/openaiService/';
 
-
+/**
+ * Represents an endpoint for making requests.
+ * Utilizes OpenAI service for processing the requests.
+ */
 export class EndPoint {
-    public requestContent: string;    
-    private openaiService: OpenAIService;
-    
+  /**
+   * The content of the request to be sent.
+   * @type {string}
+   */
+  public requestContent: string;
 
-    constructor(model:string,apiKey:string) {        
-        this.openaiService = new OpenAIService(model,apiKey);        
+  /**
+   * Service object for interacting with OpenAI.
+   * @private
+   * @type {OpenAIService}
+   */
+  private openaiService: OpenAIService;
+
+  /**
+   * Constructs an EndPoint instance.
+   * @param {string} model - The model name to be used in OpenAI Service.
+   * @param {string} apiKey - The API key for OpenAI service authentication.
+   */
+  constructor(model: string, apiKey: string) {
+    this.openaiService = new OpenAIService(model, apiKey);
+  }
+
+  /**
+   * Determines the type of HTTP method to be used for the endpoint.
+   * Currently, it returns a fixed value.
+   * @returns {string} The HTTP method type.
+   */
+  decideEndpointType(): string {
+    return 'POST';
+  }
+
+  /**
+   * Selects the appropriate endpoint and processes the request.
+   * @async
+   * @param {string} requestContent - The content of the request.
+   * @param {string} apiEndpointFilePath - Path to the API endpoint configuration.
+   * @returns {Promise<any>} A promise that resolves to the result of the OpenAI service call.
+   * @throws Will throw an error if the OpenAI service call fails.
+   */
+  async selectEndpoint(
+    requestContent: string,
+    apiEndpointFilePath: string,
+  ): Promise<any> {
+    try {
+      const result = await this.openaiService.create(
+        requestContent,
+        apiEndpointFilePath,
+      );
+      return result;
+    } catch (error) {
+      // Uncomment the following line if you want to log errors to the console.
+      // console.error("An error occurred: ", error);
+      throw error;
     }
-    decideEndpointType():string{
-      return "POST"
-    }
-    async selectEndpoint(requestContent:string,apiEndpointFilePath:string): Promise<any> {        
-        try {            
-            const result = await this.openaiService.create(requestContent,apiEndpointFilePath);
-            return result;
-        } catch (error) {
-            // console.error("An error occurred: ", error);
-            throw error;
-        }
-    }
+  }
 }
