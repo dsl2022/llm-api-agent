@@ -1,5 +1,5 @@
 import { OpenAIService } from '@utils/openaiService/';
-
+import { FileService } from '@utils/fileService'
 /**
  * Represents an endpoint for making requests.
  * Utilizes OpenAI service for processing the requests.
@@ -17,6 +17,7 @@ export class EndPoint {
    * @type {OpenAIService}
    */
   private openaiService: OpenAIService;
+  private fileService: FileService;
 
   /**
    * Constructs an EndPoint instance.
@@ -25,14 +26,24 @@ export class EndPoint {
    */
   constructor(model: string, apiKey: string) {
     this.openaiService = new OpenAIService(model, apiKey);
+    this.fileService = new FileService("");
   }
-
+  /**
+   * Extract schema object from OpenApi Yaml file and write as output JSON file
+   * @param {string} yamlInputFilePath - Path of yaml file to be extracted from
+   * @param {string} outputJsonPath - Path of extracted object to be saved
+   */
+  getSchemaFromOpenApiYaml(yamlInputFilePath:string,outputJsonPath:string){
+    this.fileService.extractApiSchema(yamlInputFilePath, outputJsonPath)
+  }
+  
   /**
    * Determines the type of HTTP method to be used for the endpoint.
    * Currently, it returns a fixed value.
    * @returns {string} The HTTP method type.
    */
-  decideEndpointType(): string {
+  getPayloadFromSchema(requestContent: string, schema:any): string {
+
     return 'POST';
   }
 

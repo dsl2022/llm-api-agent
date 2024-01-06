@@ -24,7 +24,9 @@ describe('EndPoint', () => {
 
   describe('decideEndpointType', () => {
     it('should return POST', () => {
-      expect(endPoint.decideEndpointType()).toBe('POST');
+      const requestContent = "test content"
+      const schema = "test schema"
+      expect(endPoint.getPayloadFromSchema(requestContent, schema)).toBe('POST');
     });
   });
 
