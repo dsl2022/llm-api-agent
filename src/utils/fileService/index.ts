@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-
+const yaml = require('js-yaml');
 /**
  * A service class for handling file operations.
  * Provides functionality to read files from a specified root directory.
@@ -27,6 +27,16 @@ export class FileService {
     this.rootDir = rootDir;
   }
 
+  extractApiSchema(filePath:string,outputPath:string){
+    try {
+      const fileContents = fs.readFileSync(filePath, 'utf8');
+      const {components:{schemas}} = yaml.load(fileContents);
+      schemas;
+      fs.writeFileSync(outputPath, schemas);
+    } catch (e) {
+      console.error(e);
+    }
+  }
   /**
    * Reads a file from the given relative path and returns its content.
    * @param {string} relativePath - The relative path to the file from the root directory.
