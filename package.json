@@ -15,12 +15,14 @@
   "files": [
     "dist"
   ],
-  "release": { 
-    "branches": [ "main" ] 
+  "release": {
+    "branches": [
+      "main"
+    ]
   },
-  "scripts": {    
-    "build": "rm -rf dist && microbundle --tsconfig tsconfig.json --no-sourcemap",
-    "start": "ts-node src/index.ts",
+  "scripts": {
+    "build": "node init && rm -rf dist && microbundle --tsconfig tsconfig.json --no-sourcemap",
+    "start": "node init && ts-node src/index.ts",
     "prepublishOnly": "npm run build",
     "test": "jest",
     "lint": "eslint 'src/**/*.{js,ts}' --fix",

@@ -59,7 +59,7 @@ export class OpenAIService {
    * @throws {Error} Throws an error if the request to OpenAI fails.
    */
   async createForSchema(message: string, schema: any): Promise<any> {
-    const systemMessage = extractBodyBySchemaPrompt(schema)
+    const systemMessage = extractBodyBySchemaPrompt(JSON.stringify(schema))
     if(this.chatSession.currentSystemMessage!==systemMessage){
       this.chatSession.clearSession()
       this.chatSession.addMessage('system','system',systemMessage);
