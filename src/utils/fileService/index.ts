@@ -32,7 +32,7 @@ export class FileService {
       const fileContents = fs.readFileSync(filePath, 'utf8');
       const {components:{schemas}} = yaml.load(fileContents);
       schemas;
-      fs.writeFileSync(outputPath, schemas);
+      fs.writeFileSync(outputPath, JSON.stringify(schemas));
     } catch (e) {
       console.error(e);
     }

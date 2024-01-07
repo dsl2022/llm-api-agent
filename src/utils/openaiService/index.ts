@@ -1,8 +1,9 @@
 import OpenAI from 'openai';
 import dotenv from 'dotenv';
 import { FileService } from '@utils/fileService';
-import { systemPrompt } from '@prompts/systemPrompts';
-
+import { extractBodyBySchemaPrompt,systemPrompt } from '@prompts/systemPrompts';
+import { ChatSession } from 'src/session';
+import { Chat } from 'openai/resources';
 dotenv.config();
 
 /**
@@ -34,7 +35,7 @@ export class OpenAIService {
    * @type {FileService}
    */
   private fileService: FileService;
-
+  private chatSession: ChatSession
   /**
    * Constructs an instance of OpenAIService.
    * @param {string} model - The model name to be used in OpenAI API.
@@ -42,12 +43,39 @@ export class OpenAIService {
    */
   constructor(model: string, apiKey: string) {
     this.model = model;
+    this.chatSession = new ChatSession()
     this.fileService = new FileService('.');
     this.openai = new OpenAI({
       apiKey,
     });
   }
 
+    /**
+   * Creates a chat completion request to OpenAI using a system prompt and user message.
+   * @async
+   * @param {string} message - The user message for the chat completion.
+   * @param {any} schema - The file path for the system prompt configuration.
+   * @returns {Promise<any>} A promise that resolves to the response from OpenAI's chat completion.
+   * @throws {Error} Throws an error if the request to OpenAI fails.
+   */
+  async createForSchema(message: string, schema: any): Promise<any> {
+    const systemMessage = extractBodyBySchemaPrompt(schema)
+    if(this.chatSession.currentSystemMessage!==systemMessage){
+      this.chatSession.clearSession()
+      this.chatSession.addMessage('system','system',systemMessage);
+    }
+    this.chatSession.addMessage('user','userName', message);
+    const response = await this.openai.chat.completions.create({
+      model: this.model || 'gpt-4-1106-preview',
+      messages: this.chatSession.getMessages(),
+      temperature: 1,
+      max_tokens: 256,
+      top_p: 1,
+      frequency_penalty: 0,
+      presence_penalty: 0,
+    });
+    return response;
+  }
   /**
    * Creates a chat completion request to OpenAI using a system prompt and user message.
    * @async
@@ -58,18 +86,16 @@ export class OpenAIService {
    */
   async create(message: string, filePath: string): Promise<any> {
     const fileRead = await this.fileService.readFile(filePath);
+
+    const systemMessage =  systemPrompt(fileRead)
+    if(this.chatSession.currentSystemMessage!==systemMessage){
+      this.chatSession.clearSession()
+      this.chatSession.addMessage('system','system',systemMessage);
+    }
+    this.chatSession.addMessage('user', 'userName', message);
     const response = await this.openai.chat.completions.create({
       model: this.model || 'gpt-4-1106-preview',
-      messages: [
-        {
-          role: 'system',
-          content: systemPrompt(fileRead),
-        },
-        {
-          role: 'user',
-          content: message,
-        },
-      ],
+      messages: this.chatSession.getMessages(),
       temperature: 1,
       max_tokens: 256,
       top_p: 1,

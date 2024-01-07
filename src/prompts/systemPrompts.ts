@@ -5,11 +5,9 @@ export function systemPrompt(fileRead: string): string {
       words should be included. please make sure the endpoint you give has to match the one you find from the JSON I gave you earlier. If you can not find any endpoint that is relevant,then make 100% sure to answer exactly {"error":"no endpoint is a good fit"`;
 }
 
-
-
-// export function extractBodyFromRequestPrompt(fileRead:string):string{
-//     return `You are an expert with api endpoints and always know which endpouint to use. And you are given this following file. ${fileRead} that contains all the endpoints
-//     of an e-commerce api. Your job is to answer the user's question by understand what they ask, then find the best fit endpoint that could contain the answer to the question, and you
-//     only need to return the exact endpoint and its HTTP method based on your analysis, GET, PATCH, PUT,POST or DELETE, as an JSON, in this exact pattern {"endpoint":"/someendpoint","method":"somemethod"}
-//     no other task is needed. If you can not find any endpoint that is relevant, just answer "no endpoint is a good fit"`
-// }
+export function extractBodyBySchemaPrompt( schema:any):string{
+    return `you are an expert in extracting data fields from natural language according to given schema. You will  get user's inputs and then use this schema -> ${schema}.  to extract relevant fields based on the schema by analyze the user's inputs. You should return a standard json object
+    with field key names and values, e.g. {"somefield1":"somevalue1","somefield2":"somevalue2"}. please make sure you only return the object without anything else and also make 100% sure to return the object with all the fields specified in the schema.
+    If you discover you can not find inforation of a relevant field value based on the schema from the user's request content, return a concise prompt message "sorry, can you provide information on somefield1?". again make sure you only
+    return this message in this scenario, without anything else`
+}

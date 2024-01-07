@@ -43,7 +43,7 @@ export class EndPoint {
    * @returns {string} The HTTP method type.
    */
   getPayloadFromSchema(requestContent: string, schema:any): string {
-
+    
     return 'POST';
   }
 
