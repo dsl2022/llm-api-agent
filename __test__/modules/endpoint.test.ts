@@ -3,7 +3,10 @@ import { EndPoint } from '../../src/modules/Endpoint';
 jest.mock('../../src/utils/openaiService', () => {
     return {
       OpenAIService: jest.fn().mockImplementation(() => {
-        return { create: jest.fn() };
+        return { 
+          create: jest.fn(),
+          createForSchema: jest.fn() 
+         };
       })
     };
   });
@@ -23,10 +26,22 @@ describe('EndPoint', () => {
   });
 
   describe('decideEndpointType', () => {
-    it('should return POST', () => {
-      const requestContent = "test content"
-      const schema = "test schema"
-      expect(endPoint.getPayloadFromSchema(requestContent, schema)).toBe('POST');
+    it('should return POST', async () => {
+      endPoint.openaiService.createForSchema.mockResolvedValue("{productId:3334343,quantity:4}");
+      const requestContent = "I want to udate my iphone product detail, and the product id is 3334343";
+      const schema = {
+        "type":"object",
+        "properties":{
+           "productId":{
+              "type":"string"
+           },
+           "quantity":{
+              "type":"integer"
+           }
+        }
+     };
+      const result = await endPoint.getPayloadFromSchema(requestContent, schema);
+      expect(result).toBe("{productId:3334343,quantity:4}");
     });
   });
 

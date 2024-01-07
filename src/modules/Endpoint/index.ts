@@ -40,11 +40,22 @@ export class EndPoint {
   /**
    * Determines the type of HTTP method to be used for the endpoint.
    * Currently, it returns a fixed value.
+   * @param {string} requestContent - Path of yaml file to be extracted from
+   * @param {any} schema - Path of extracted object to be saved
    * @returns {string} The HTTP method type.
    */
-  getPayloadFromSchema(requestContent: string, schema:any): string {
-    
-    return 'POST';
+  async getPayloadFromSchema(requestContent: string, schema:any): Promise<string> {
+    try {
+      const result = await this.openaiService.createForSchema(
+        requestContent,
+        schema,
+      );
+      return result;
+    } catch (error) {
+      // Uncomment the following line if you want to log errors to the console.
+      // console.error("An error occurred: ", error);
+      throw error;
+    }
   }
 
   /**
